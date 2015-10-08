@@ -230,7 +230,7 @@ For data on the `heap` this means if `f` mallocs a variable `p` and then free’
 ## Maintain Invariants
 - Functions that allocate should always allocate. This means the caller can always free it.
 - All variables returned by functions should have the same lifetime. This means if someone passes in a pointer (that points to something on the stack or the heap), you should pass something back on the heap (not conditionally back on the stack or the heap).
-- Either always null-terminate or never null-terminate strings. Whatever you choose, make sure you remember that some functions expect a null terminated string (strcmp, strlen), while others don’t, and instead accept a length (ex: strncmp) where the n signals that you have to specify a length.
+- Either always null-terminate or never null-terminate strings. Whatever you choose, make sure you remember that some functions expect a null terminated string (strcmp, strlen), while others don’t, and instead accept a length (ex: str**n**cmp) where the n signals that you have to specify a length.
 
 ## Valgrind
 You should always be running your programs with valgrind. This means that you should always at least write: `valgrind ./command`
