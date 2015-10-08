@@ -1,4 +1,5 @@
-Memory Management in C
+# Memory Management in C
+
 C is a “close to the metal” language. This means that you can access the hardware in a very “native” way. One of the biggest ways this manifests itself is through the pointer-integer duality. In understanding the pointer integer duality, you will start to understand the foundation of memory management in C. Furthermore, understanding memory management in C will go a long way towards helping you understand the memory model of other “higher-level” programming languages.
 
 [Disclaimer] This is meant to be for relative beginners in C, so take everything with a grain of salt.
