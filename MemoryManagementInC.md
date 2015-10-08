@@ -200,15 +200,18 @@ All your variables should have a clear owner. When you pass a pointer `p` to a f
 - Returns an updated (valid) pointer `p` as a return value.
 - Takes a pointer to your pointer `pp = &p` and only mutates (`*pp`).
 - Guarantees that `p` is not mutated (though *p can be).
+
 Then `g` consumes `p` and it should not be used after `g` returns. If ownership is passed back, our value is effectively “borrowed” by `g`. When writing code you should always mark functions that consume a value with a comment. This way, when you call these function, you know you should not use your value after. Whenever a value is “borrowed” by a function, always make sure that that function follows one of the three rules specified above, and above all make sure that your pointers are still valid after the function returns.
 
 Though maintaining the idea of ownership might seem complex, it is really just formalizing a process that you already probably do. Otherwise how can you know whether `f` can use `p` after calling `g(p)`? It could be that `g`transferred ownership to a structure, and now your function `f` is accidentally mutating some variable that is also shared by your structure. This behavior is called aliasing and though aliasing is not illegal it does make it significantly harder to reason about the state of your program.
 ## Lifetimes
 One of the big advantages that ownership gives us is that we can now start to reason about the lifetime of a variable. Lets just say that you:
+
 - In function `f`: malloc some `memory`
 - Give a pointer to this `memory` to a structure `S`
 - Do some operations on `S` which causes `memory`to be reallocated
 - Access `memory` in `f’s` local variable.
+
 This is the same as the invalid code mentioned in the heap section. This is a use after free error. This happened because reallocing `memory`caused my old value to be freed, but my function `f`still has a pointer to the old value and tries to use it (even though it has been freed). This is a big error in a program that displays how aliasing can make code harder to reason about. Specifically in this case, because there are two different entities `f`and `S`which think they own `memory`.This means that when one reallocs `memory`the other won’t know about it. Therefore we don’t know about the lifetime of this variable `memory`. In this case both `f` and `S` are sharing a pointer (`memory`) to some data. When you want to share a value like this (just like between `f` and `g` in the fixed heap example) you pass a pointer to what you are sharing (`&memory`). 
 
 ### Sharing through a proxy
